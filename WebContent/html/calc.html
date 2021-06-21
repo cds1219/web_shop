@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#calcBtn').click(function() {
+			
+			const won=$('#won').val();
+			const operator=$('#operator').val();
+			
+			$.post("../main", {
+				sign:"calc",
+				won, operator
+			}, function(data, status) {
+				$("#resultDiv").text(data);
+				//alert(data);
+				//window.close(); 
+			});//end post
+		});//end calcBtn
+		
+		$('#closeBtn').click(function() {
+			window.close(); 
+		});
+	})
+</script>
+</head>
+<body>
+	환율 계산기<br>
+	원화: <input id="won">
+	<select id="operator">
+		<option value="dollar">달러</option>
+		<option value="en">엔화</option>
+		<option value="wian">위안</option>
+		<option value="pound">파운드</option>
+		<option value="euro">유로</option>
+	</select>
+	<button id="calcBtn">변환</button>
+	
+	<br>
+	<h1>result : <span id="resultDiv"></span></h1>
+	<button id="closeBtn">창 닫기</button>
+</body>
+</html>

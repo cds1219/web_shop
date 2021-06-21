@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('button').click(function() {
+			//태그셀렉터 사용 - 자바스크립트일때는 다 이렇게
+			const subject = $('input:checkbox[name=subject]:checked');
+			/* const subject = $('input:checkbox[name=subject]:checked').val(); */
+			
+			const subject_value=[];
+			
+			for(let i=0;i<subject.length;i++){
+				//jQuery 형태로
+				/* console.log($(subject[i]).val()); */
+				//자바스크립트 속성
+				/* console.log(subject[i].value); */
+				subject_value.push($(subject[i]).val());
+			}
+
+			console.log(subject_value);
+			
+			//컨트롤러는 게이트(전부 거기로)
+			$.post("../main", {
+				sign:"subject",
+				subject_value
+			}, function() {
+				window.close();
+			});
+		});
+	})
+</script>
+</head>
+<body>
+	<!-- id를 name으로  -->
+	당신이 아는 언어는?<br>
+	<input name='subject' type="checkbox" value="java">자바<br> 
+	<input name='subject' type="checkbox" value="C">C<br> 
+	<input name='subject' type="checkbox" value="python">파이썬<br> 
+	<input name='subject' type="checkbox" value="Android">안드로이드<br> 
+	<button>전송</button>
+</body>
+</html>

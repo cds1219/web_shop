@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('button').click(function() {
+			const id = $('#id').val();
+			const pw = $('#pw').val();
+
+			alert(id + " " + pw);
+
+			$.post("../main", {
+				sign:"login",
+				id,	pw
+			}, function(data, status) {
+				if(data.includes("login")){
+					alert(data);
+				}else{
+					opener.document.getElementById("welcomeMsg").innerHTML = data + "님 환영합니다. <button>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
+				} 
+				window.close();
+			});
+		});
+	})
+</script>
+</head>
+<body>
+	ID <input id='id'><br> 
+	PW <input id='pw'><br>
+	<button>로그인</button>
+</body>
+</html>
