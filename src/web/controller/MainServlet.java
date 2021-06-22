@@ -3,6 +3,7 @@ package web.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -101,6 +102,29 @@ public class MainServlet extends HttpServlet {
 			session.invalidate();
 			System.out.println("logout ok");
 			out.append("logout ok");
+			
+		}else if(sign.equals("loginForm")) {//loginForm
+			String id=request.getParameter("id");
+			String pw=request.getParameter("pw");
+			MemberVO vo=new MemberVO(id,pw);
+			System.out.println(vo);
+			
+			try {
+				String name=service.selectMember(vo);
+				if(name!=null) {//ok
+					HttpSession session= request.getSession();
+					session.setAttribute("id", id);
+					
+					RequestDispatcher disp=request.getRequestDispatcher("login_ok.jsp");
+					disp.forward(request, response);
+				}else {//fail
+					RequestDispatcher disp=request.getRequestDispatcher("login_fail.jsp");
+					disp.forward(request, response);
+				}
+			} catch (ShopException e) {
+				RequestDispatcher disp=request.getRequestDispatcher("login_fail.jsp");
+				disp.forward(request, response);
+			}
 		}
 		
 	}
