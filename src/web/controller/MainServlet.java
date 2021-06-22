@@ -2,6 +2,7 @@ package web.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import web.service.MemberService;
 import web.util.Calculator;
 import web.util.ShopException;
 import web.vo.MemberVO;
+import web.vo.ProductVO;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
@@ -126,8 +128,31 @@ public class MainServlet extends HttpServlet {
 				RequestDispatcher disp=request.getRequestDispatcher("login_fail.jsp");
 				disp.forward(request, response);
 			}
+			
+		}else if("basketInsert".equals(sign)){//장바구니 넣기
+			String product_value=request.getParameter("product_value");
+			ProductVO vo=new ProductVO(product_value);
+			System.out.println(vo);
+			
+			HttpSession session=request.getSession(false);
+			if(session==null) {//로그인 필요
+				out.append("먼저 로그인하세요.");
+			}else {									//return type Object
+				ArrayList basket=(ArrayList) session.getAttribute("basket");
+				if(basket==null) {//최초 장바구니
+					basket=new ArrayList();
+										//꼬리표name	ArrayList
+					session.setAttribute("basket", basket);
+				}
+				//기존 장바구니
+				basket.add(vo);
+				System.out.println(basket);
+				out.append(product_value+"가 장바구니에 담겼습니다.");
+			}
+					
+					
 		}
 		
-	}
+	}//end service
 	
-}
+}//end class
