@@ -89,6 +89,14 @@ public class MainServlet extends HttpServlet {
 			HttpSession session= request.getSession();//오브젝트타입
 			String id=(String)session.getAttribute("id");
 			System.out.println(session.getId()+" "+id);
+			try {
+				service.deleteMember(id);
+				out.append("회원탈퇴 되셨습니다.");
+			} catch (ShopException e) {
+				out.append(e.getMessage());
+			}
 		}
+		
 	}
+	
 }

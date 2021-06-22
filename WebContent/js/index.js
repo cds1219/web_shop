@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	console.log("index.js ready....ok");
 
 	$(document).on('click', '#memberDeleteBtn', function() {
@@ -8,8 +9,10 @@ $(document).ready(function() {
 				{ sign: "memberDelete"},
 				function(data) {
 					alert(data);
+					location.reload();
 				 }
 			);
 		}
 	});
+	
 });

@@ -106,8 +106,36 @@ public class MemberDAO {
 
 	}
 
-	public void deleteMember() {
+	public void deleteMember(String id) throws ShopException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			// 2.연결
+			con = ds.getConnection();	//대여
 
+			// 3.Statement 생성
+			st = con.prepareStatement("delete from Users where id=?");
+
+			// 4.SQL 전송
+			st.setString(1, id);
+
+			int i = st.executeUpdate();// select만 query
+
+			// 5.결과 얻기
+			System.out.println(i + "행이 delete 되었습니다.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ShopException("회원탈퇴실패");
+		} finally {
+			// 6.종료
+			try {
+				st.close();
+				con.close();	//반납
+			} catch (Exception e) {
+				
+			}
+		}
 	}
 
 }
