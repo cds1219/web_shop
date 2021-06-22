@@ -12,6 +12,7 @@ $(document).ready(function() {
 				{ sign: "memberDelete" },
 				function(data) {
 					alert(data);
+					$.removeCookie('username',{path:'/'});
 					location.reload();
 				}
 			);

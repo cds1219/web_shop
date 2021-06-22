@@ -40,7 +40,7 @@ public class MainServlet extends HttpServlet {
 		
 		String sign=request.getParameter("sign");
 		
-		if(sign.equals("memberInsert")) {
+		if("memberInsert".equals("sign")) {
 			String name=request.getParameter("name");
 			String id=request.getParameter("id");
 			String pw=request.getParameter("pw");
