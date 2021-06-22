@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import web.vo.ProductVO;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
+	int count=1;	
 	MemberService service;
 	
 	@Override
@@ -163,6 +165,21 @@ public class MainServlet extends HttpServlet {
 				}
 				out.append("</ol>");
 			}
+			
+		}else if("cookie_basketInsert".equals(sign)) {
+			String product_value=request.getParameter("product_value");
+			Cookie c=new Cookie("product"+count++,product_value);
+			response.addCookie(c);
+			out.append(product_value+"가 장바구니에 담겼습니다.");
+			
+		}else if("cookie_basketView".equals(sign)) {
+			Cookie []all=request.getCookies();
+			out.append("<ul>");
+			for(Cookie c:all) {
+				out.append("<li>"+c.getName()+" : "+c.getValue()+"</li>");
+			}
+			out.append("</ul>");
+			
 		}
 		
 	}//end service
