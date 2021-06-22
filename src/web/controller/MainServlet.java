@@ -95,6 +95,12 @@ public class MainServlet extends HttpServlet {
 			} catch (ShopException e) {
 				out.append(e.getMessage());
 			}
+			
+		}else if(sign.equals("logout")) {//로그아웃 -> 세션무효화
+			HttpSession session=request.getSession();
+			session.invalidate();
+			System.out.println("logout ok");
+			out.append("logout ok");
 		}
 		
 	}

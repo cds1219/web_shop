@@ -114,7 +114,7 @@ public class MemberDAO {
 			con = ds.getConnection();	//대여
 
 			// 3.Statement 생성
-			st = con.prepareStatement("delete from Users where id=?");
+			st = con.prepareStatement("delete from USERS where id=?");
 
 			// 4.SQL 전송
 			st.setString(1, id);
