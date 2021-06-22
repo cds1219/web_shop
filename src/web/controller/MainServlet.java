@@ -138,7 +138,7 @@ public class MainServlet extends HttpServlet {
 			if(session==null) {//로그인 필요
 				out.append("먼저 로그인하세요.");
 			}else {									//return type Object
-				ArrayList basket=(ArrayList) session.getAttribute("basket");
+				ArrayList<ProductVO> basket=(ArrayList<ProductVO>) session.getAttribute("basket");
 				if(basket==null) {//최초 장바구니
 					basket=new ArrayList();
 										//꼬리표name	ArrayList
@@ -149,8 +149,20 @@ public class MainServlet extends HttpServlet {
 				System.out.println(basket);
 				out.append(product_value+"가 장바구니에 담겼습니다.");
 			}
-					
-					
+			
+							//변수는 null이 될 수 있기 때문에
+		}else if("basketView".equals(sign)) {
+			HttpSession session=request.getSession(false);
+			if(session==null) {//로그인 필요
+				out.append("먼저 로그인하세요.");
+			}else {
+				ArrayList<ProductVO> basket=(ArrayList<ProductVO>) session.getAttribute("basket");
+				out.append("<ol>");
+				for(ProductVO vo:basket) {
+					out.append("<li>"+vo.getName()+"</li>");
+				}
+				out.append("</ol>");
+			}
 		}
 		
 	}//end service

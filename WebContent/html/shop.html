@@ -8,7 +8,7 @@
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('button').click(function() {
+		$('#basketInsertBtn').click(function() {
 									//type		name		
 			const product = $('input:radio[name=product]:checked');
 			
@@ -23,14 +23,28 @@
 			
 		});
 		
+		$("#basketViewBtn").click(function(){
+			$.post('../main',
+					{sign:"basketView"},
+					function(data){
+						$('#basketViewDiv').html(data);
+					}
+			);
+		});
+		
 	})
 </script>
 </head>
 <body>
 	상품을 선택 후 장바구니 담기 버튼을 눌러주세요<br><br>
+			<!-- name은 서버에 보내기 위한 -->
 	<input name='product' type="radio" value="냉장고"><img src='../img/냉장고.jpg' width='100px'><br><br> 
 	<input name='product' type="radio" value="세탁기"><img src='../img/세탁기.jpg' width='100px'><br><br> 
 	<input name='product' type="radio" value="TV"><img src='../img/TV.jpg' width='100px'><br><br> 
-	<button>장바구니 담기</button>
+		<!-- id는 유일 -->
+	<button id="basketInsertBtn">장바구니 담기</button>
+	<hr>
+	<button id="basketViewBtn">장바구니 보기</button><br><br>
+	<div id="basketViewDiv"></div>
 </body>
 </html>
