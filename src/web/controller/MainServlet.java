@@ -116,6 +116,7 @@ public class MainServlet extends HttpServlet {
 					session.setAttribute("id", id);
 					
 					RequestDispatcher disp=request.getRequestDispatcher("login_ok.jsp");
+					request.setAttribute("name", name);
 					disp.forward(request, response);
 				}else {//fail
 					RequestDispatcher disp=request.getRequestDispatcher("login_fail.jsp");
