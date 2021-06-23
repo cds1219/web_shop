@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.json.simple.JSONObject;
+
 import web.service.MemberService;
 import web.util.Calculator;
 import web.util.ShopException;
@@ -39,6 +41,7 @@ public class MainServlet extends HttpServlet {
 	}
 	
 	protected void myService(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		JSONObject json=new JSONObject();
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out=response.getWriter();
@@ -58,6 +61,7 @@ public class MainServlet extends HttpServlet {
 			} catch (ShopException e) {
 				out.append(e.getMessage());
 			}
+			
 		}else if(sign.equals("login")) {
 			String id=request.getParameter("id");
 			String pw=request.getParameter("pw");
@@ -66,32 +70,40 @@ public class MainServlet extends HttpServlet {
 			
 			try {
 				String name=service.selectMember(vo);
-				if(name!=null) {
+				if(name!=null) {	//ok
 					HttpSession session= request.getSession();
 					session.setAttribute("id", id);
 					System.out.println(session.getId());
-					out.append(name);
-				}else {
-					out.append("login 실패");
+					
+					json.put("name", name);
+					System.out.println(json.toJSONString());	//권장
+					System.out.println(json.toString());
+					out.append(json.toJSONString());	//{"name":"전은수"}
+				}else {	//fail
+					json.put("msg", "login 실패");
+					out.append(json.toJSONString());
 				}
 			} catch (ShopException e) {
-				out.append(e.getMessage());
+				json.put("msg", e.getMessage());
+				out.append(json.toJSONString());
 			}
-		}else if(sign.equals("subject")){//체크박스
+			
+		}else if(sign.equals("subject")){	//체크박스
 			String [] subject_value=request.getParameterValues("subject_value[]");
 			
 			for(String value:subject_value) {
 				System.out.println("알고있는 과목:"+value);
 			}
-		}else if(sign.equals("calc")){//환율계산
+			
+		}else if(sign.equals("calc")){	//환율계산
 			String won=request.getParameter("won");
 			String operator=request.getParameter("operator");
 			
 			String result=Calculator.calculate(Float.parseFloat(won),operator);
 			out.append(result);
 			
-		}else if(sign.equals("memberDelete")) {//회원탈퇴
-			HttpSession session= request.getSession();//오브젝트타입
+		}else if(sign.equals("memberDelete")) {	//회원탈퇴
+			HttpSession session= request.getSession();	//오브젝트타입
 			String id=(String)session.getAttribute("id");
 			System.out.println(session.getId()+" "+id);
 			try {
@@ -101,13 +113,13 @@ public class MainServlet extends HttpServlet {
 				out.append(e.getMessage());
 			}
 			
-		}else if(sign.equals("logout")) {//로그아웃 -> 세션무효화
+		}else if(sign.equals("logout")) {	//로그아웃 -> 세션무효화
 			HttpSession session=request.getSession();
 			session.invalidate();
 			System.out.println("logout ok");
 			out.append("logout ok");
 			
-		}else if(sign.equals("loginForm")) {//loginForm
+		}else if(sign.equals("loginForm")) {	//loginForm
 			String id=request.getParameter("id");
 			String pw=request.getParameter("pw");
 			MemberVO vo=new MemberVO(id,pw);
@@ -115,14 +127,14 @@ public class MainServlet extends HttpServlet {
 			
 			try {
 				String name=service.selectMember(vo);
-				if(name!=null) {//ok
+				if(name!=null) {	//ok
 					HttpSession session= request.getSession();
 					session.setAttribute("id", id);
 					
 					RequestDispatcher disp=request.getRequestDispatcher("login_ok.jsp");
 					request.setAttribute("name", name);
 					disp.forward(request, response);
-				}else {//fail
+				}else {	//fail
 					RequestDispatcher disp=request.getRequestDispatcher("login_fail.jsp");
 					disp.forward(request, response);
 				}
@@ -131,17 +143,17 @@ public class MainServlet extends HttpServlet {
 				disp.forward(request, response);
 			}
 			
-		}else if("basketInsert".equals(sign)){//장바구니 넣기
+		}else if("basketInsert".equals(sign)){	//장바구니 넣기
 			String product_value=request.getParameter("product_value");
 			ProductVO vo=new ProductVO(product_value);
 			System.out.println(vo);
 			
 			HttpSession session=request.getSession(false);
-			if(session==null) {//로그인 필요
+			if(session==null) {	//로그인 필요
 				out.append("먼저 로그인하세요.");
 			}else {									//return type Object
 				ArrayList<ProductVO> basket=(ArrayList<ProductVO>) session.getAttribute("basket");
-				if(basket==null) {//최초 장바구니
+				if(basket==null) {	//최초 장바구니
 					basket=new ArrayList();
 										//꼬리표name	ArrayList
 					session.setAttribute("basket", basket);

@@ -19,14 +19,17 @@
 				sign:"login",
 				id,	pw
 			}, function(data, status) {
-				if(data.includes("login")){//fail
-					alert(data);
-				}else{//ok
+				data=JSON.parse(data);
+				console.log(data);
+				
+				if(data.msg){	//fail
+					alert(data.msg);
+				}else{	//ok data={"name":"전은수"}
 					//document.cookie = "username="+data;
-					$.cookie("username", data,{path:'/'});
-					opener.document.getElementById("welcomeMsg").innerHTML = data + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
+					$.cookie("username", data.name,{path:'/'});
+					opener.document.getElementById("welcomeMsg").innerHTML = data.name + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
 				} 
-				window.close();
+				//window.close();
 			});
 		});
 	})
