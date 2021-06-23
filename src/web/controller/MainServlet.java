@@ -16,20 +16,24 @@ import javax.websocket.Session;
 
 import org.json.simple.JSONObject;
 
+import web.service.BoardService;
 import web.service.MemberService;
 import web.util.Calculator;
 import web.util.ShopException;
+import web.vo.ArticleVO;
 import web.vo.MemberVO;
 import web.vo.ProductVO;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
 	int count=1;	
-	MemberService service;
+	MemberService m_service;
+	BoardService b_service;
 	
 	@Override
 	public void init() throws ServletException {
-		service=new MemberService();
+		m_service=new MemberService();
+		b_service=new BoardService();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,7 +60,7 @@ public class MainServlet extends HttpServlet {
 			System.out.println(vo);
 			
 			try {
-				service.insertMember(vo);
+				m_service.insertMember(vo);
 				out.append(name+"님 가입되셨습니다.");
 			} catch (ShopException e) {
 				out.append(e.getMessage());
@@ -69,7 +73,7 @@ public class MainServlet extends HttpServlet {
 			System.out.println(vo);
 			
 			try {
-				String name=service.selectMember(vo);
+				String name=m_service.selectMember(vo);
 				if(name!=null) {	//ok
 					HttpSession session= request.getSession();
 					session.setAttribute("id", id);
@@ -107,7 +111,7 @@ public class MainServlet extends HttpServlet {
 			String id=(String)session.getAttribute("id");
 			System.out.println(session.getId()+" "+id);
 			try {
-				service.deleteMember(id);
+				m_service.deleteMember(id);
 				out.append("회원탈퇴 되셨습니다.");
 			} catch (ShopException e) {
 				out.append(e.getMessage());
@@ -126,7 +130,7 @@ public class MainServlet extends HttpServlet {
 			System.out.println(vo);
 			
 			try {
-				String name=service.selectMember(vo);
+				String name=m_service.selectMember(vo);
 				if(name!=null) {	//ok
 					HttpSession session= request.getSession();
 					session.setAttribute("id", id);
@@ -191,6 +195,10 @@ public class MainServlet extends HttpServlet {
 				out.append("<li>"+c.getName()+" : "+c.getValue()+"</li>");
 			}
 			out.append("</ul>");
+			
+		}else if("listArticles.do".equals(sign)) {
+			ArrayList<ArticleVO> articleList=new ArrayList<ArticleVO>();
+			articleList=b_service.listArticles();
 			
 		}
 		
