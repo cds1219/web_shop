@@ -3,6 +3,7 @@ package web.service;
 import java.util.ArrayList;
 
 import web.dao.BoardDAO;
+import web.util.ShopException;
 import web.vo.ArticleVO;
 
 public class BoardService {
@@ -13,7 +14,7 @@ public class BoardService {
 		dao=new BoardDAO();
 	}
 
-	public ArrayList<ArticleVO> listArticles() {
+	public ArrayList<ArticleVO> listArticles() throws ShopException {
 		return dao.selectAllArticles();
 	}
 }

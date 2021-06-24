@@ -3,6 +3,7 @@ package web.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import web.service.BoardService;
@@ -197,9 +199,31 @@ public class MainServlet extends HttpServlet {
 			out.append("</ul>");
 			
 		}else if("listArticles.do".equals(sign)) {
-			ArrayList<ArticleVO> articleList=new ArrayList<ArticleVO>();
-			articleList=b_service.listArticles();
-			
+			 try {
+				ArrayList<ArticleVO> articleList=b_service.listArticles();
+				JSONArray a=new JSONArray();
+				for(ArticleVO vo:articleList) {
+					/*
+					 * int articleNO=vo.getArticleNO(); int parentNO=vo.getParentNO(); 
+					 * String title=vo.getTitle(); String content=vo.getContent(); String id=vo.getId();
+					 * Date writeDate=vo.getWriteDate();
+					 */
+					JSONObject o=new JSONObject();
+					o.put("articleNO", vo.getArticleNO());
+					o.put("parentNO", vo.getParentNO());
+					o.put("title", vo.getTitle());
+					o.put("content", vo.getContent());
+					o.put("id", vo.getId());
+					o.put("writeDate", vo.getWriteDate());
+					a.add(o);
+				}
+				//out.append(text/html/json/xml);
+				System.out.println(a.toJSONString());
+				out.append(a.toJSONString());
+			} catch (ShopException e) {
+				
+			}
+			 
 		}
 		
 	}//end service
