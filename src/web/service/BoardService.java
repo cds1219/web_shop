@@ -22,4 +22,8 @@ public class BoardService {
 		dao.insertNewArticle(vo);
 		
 	}
+
+	public ArticleVO viewArticle(int articleNO) throws ShopException {
+		return dao.selectArticle(articleNO);
+	}
 }

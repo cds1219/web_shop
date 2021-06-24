@@ -243,6 +243,21 @@ public class MainServlet extends HttpServlet {
 				}
 			}
 			
+		}else if("viewArticle.do".equals(sign)) {
+			int articleNO=Integer.parseInt(request.getParameter("articleNO"));
+			try {
+				ArticleVO vo=b_service.viewArticle(articleNO);
+				if(vo!=null) {
+					RequestDispatcher disp=request.getRequestDispatcher("jsp/viewArticle.jsp");
+					request.setAttribute("vo", vo);
+					disp.forward(request, response);
+				}else {
+					out.append("<body><script>alert(\"해당 글이 없습니다.\")</script></body>");	//jsp로 만들어야함
+				}
+			} catch (ShopException e) {
+				out.append("<body><script>alert(\""+e.getMessage()+"\")</script></body>");	//jsp로 만들어야함
+			}
+			
 		}
 		
 	}//end service

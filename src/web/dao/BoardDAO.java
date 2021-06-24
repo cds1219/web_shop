@@ -128,4 +128,53 @@ public class BoardDAO {
 		}
 	}
 
+	public ArticleVO selectArticle(int articleNO) throws ShopException {
+		Connection con = null;
+		PreparedStatement st = null;
+		ResultSet rs=null;
+		
+		try {
+			// 2.연결
+			con = ds.getConnection();	//대여
+			
+			// 3.Statement 생성
+			String query="select parentNO, title, content, imageFileName, id, writeDate"
+					+" from t_board"
+					+" where articleNO=?";
+			
+			st = con.prepareStatement(query);
+			
+			// 4.SQL 전송
+			st.setInt(1, articleNO);
+			rs= st.executeQuery();// select만 query
+			
+			// 5.결과 얻기
+			if(rs.next()) {
+				int parentNO=rs.getInt("parentNO");
+				String title=rs.getString("title");
+				String content=rs.getString("content");
+				String imageFileName=rs.getString("imageFileName");
+				String id=rs.getString("id");
+				Date writeDate=rs.getDate("writeDate");
+				
+				ArticleVO vo=new ArticleVO(0, articleNO, parentNO, title, content, imageFileName, id, writeDate);
+				return vo;
+			}
+			
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ShopException("글 불러오기 실패");
+		} finally {
+			// 6.종료
+			try {
+				rs.close();
+				st.close();
+				con.close();	//반납
+			} catch (Exception e) {
+				
+			}
+		}
+	}
+
 }
