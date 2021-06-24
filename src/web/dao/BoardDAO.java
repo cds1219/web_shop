@@ -78,4 +78,54 @@ public class BoardDAO {
 		}
 	}
 
+	public synchronized void insertNewArticle(ArticleVO vo) throws ShopException {
+		Connection con = null;
+		PreparedStatement st = null,st2=null;
+		ResultSet rs=null;
+		
+		try {
+			// 2.연결
+			con = ds.getConnection();	//대여
+
+			// 3.Statement 생성
+			st = con.prepareStatement("insert into t_board (articleNO, parentNO, title, content, imageFileName, id, writeDate) values (?,?,?,?,?,?,sysdate)");
+
+			// 4.SQL 전송
+			st2=con.prepareStatement("select max(articleNO) from t_board");
+			rs=st2.executeQuery();
+			int articleNO=0;
+			//하나만 가져오니까 if
+			if(rs.next()) {
+				articleNO=rs.getInt(1)+1;
+			}
+			System.out.println(articleNO);
+			
+			st.setInt(1, articleNO);
+			st.setInt(2, 0);
+			st.setString(3, vo.getTitle());
+			st.setString(4, vo.getContent());
+			st.setString(5, vo.getImageFileName());
+			st.setString(6, vo.getId());
+
+			int i = st.executeUpdate();// select는 query
+
+			// 5.결과 얻기
+			System.out.println(i + "행이 insert 되었습니다.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ShopException("글쓰기 실패");
+		} finally {
+			// 6.종료
+			try {
+				rs.close();
+				st2.close();
+				st.close();
+				con.close();	//반납
+			} catch (Exception e) {
+				
+			}
+		}
+	}
+
 }

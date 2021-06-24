@@ -17,4 +17,9 @@ public class BoardService {
 	public ArrayList<ArticleVO> listArticles() throws ShopException {
 		return dao.selectAllArticles();
 	}
+
+	public void addArticle(ArticleVO vo) throws ShopException {
+		dao.insertNewArticle(vo);
+		
+	}
 }

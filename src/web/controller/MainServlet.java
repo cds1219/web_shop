@@ -227,14 +227,20 @@ public class MainServlet extends HttpServlet {
 		}else if("addArticle.do".equals(sign)) {
 			HttpSession session=request.getSession(false);
 			if(session==null) {
-				json.put("msg", "먼저 로그인하세요.");
-				out.append(json.toJSONString());
+				out.append("<body><script>alert(\"먼저 로그인하세요.\")</script></body>");
 			}else {
 				String title=request.getParameter("title");
 				String content=request.getParameter("content");
 				String imageFileName=request.getParameter("imageFileName");
 				String id=(String)session.getAttribute("id");
 				ArticleVO vo=new ArticleVO(1, 0, 0, title, content, imageFileName, id, null);
+				System.out.println(vo);
+				try {
+					b_service.addArticle(vo);
+					out.append("<body><script>alert(\"글이 등록되었습니다.\")</script></body>");
+				}catch(ShopException e) {
+					out.append("<body><script>alert(\""+e.getMessage()+"\")</script></body>");
+				}
 			}
 			
 		}
