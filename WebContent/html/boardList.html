@@ -8,10 +8,16 @@
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$.post("../main", {
+		$.get("../main", {	//디버깅할때만 get으로
 			sign : "listArticles.do"
 		}, function(data) {
-			alert(data);
+			console.log(data);	//{"articleList":[{},{},{}]}
+			data=JSON.parse(data);	//JavaScript Object로 변환 {articleList:[{},{},{}]}
+			const list=data.articleList;
+			
+			for(let i=0;i<list.length;i++){
+				console.log(list[i]);
+			}
 		});
 	})
 </script>

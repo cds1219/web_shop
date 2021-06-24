@@ -214,12 +214,13 @@ public class MainServlet extends HttpServlet {
 					o.put("title", vo.getTitle());
 					o.put("content", vo.getContent());
 					o.put("id", vo.getId());
-					o.put("writeDate", vo.getWriteDate());
+					o.put("writeDate", vo.getWriteDate().toString());
 					a.add(o);
 				}
+				json.put("articleList", a);
 				//out.append(text/html/json/xml);
-				System.out.println(a.toJSONString());
-				out.append(a.toJSONString());
+				System.out.println(json.toJSONString());
+				out.append(json.toJSONString());
 			} catch (ShopException e) {
 				
 			}
