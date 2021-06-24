@@ -209,6 +209,7 @@ public class MainServlet extends HttpServlet {
 					 * Date writeDate=vo.getWriteDate();
 					 */
 					JSONObject o=new JSONObject();
+					o.put("level", vo.getLevel());
 					o.put("articleNO", vo.getArticleNO());
 					o.put("parentNO", vo.getParentNO());
 					o.put("title", vo.getTitle());

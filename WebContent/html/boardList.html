@@ -24,7 +24,11 @@
 				console.log(data[i]);
 				table+="<tr><td>"+data[i].articleNO+"</td>";
 				table+="<td>"+data[i].id+"</td>";
-				table+="<td><span style='padding-left:20px'>"+data[i].title+"</span></td>";
+				if(data[i].level!=1){	//답글일때
+					table+="<td><a href='../main?articleNO="+data[i].articleNO+"&sign=viewArticle.do'><span style='padding-left:"+(data[i].level*15)+"px'> ↳"+data[i].title+"</span></a></td>";
+				}else{	//첫글일때
+					table+="<td><a href='../main?articleNO="+data[i].articleNO+"&sign=viewArticle.do'><span>"+data[i].title+"</span></a></td>";
+				}
 				table+="<td>"+data[i].writeDate+"</td></tr>";
 			}
 			table+="</table>";
@@ -37,6 +41,7 @@
 	<div class="container">
 		<h2 style="text-align:center;">게시판</h2>
 		<div id="boardListDiv"></div>
+		<center><a href='boardWrite.html'>글쓰기</a></center>
 	</div>
 </body>
 </html>
