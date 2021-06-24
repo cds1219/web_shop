@@ -224,6 +224,19 @@ public class MainServlet extends HttpServlet {
 				
 			}
 			 
+		}else if("addArticle.do".equals(sign)) {
+			HttpSession session=request.getSession(false);
+			if(session==null) {
+				json.put("msg", "먼저 로그인하세요.");
+				out.append(json.toJSONString());
+			}else {
+				String title=request.getParameter("title");
+				String content=request.getParameter("content");
+				String imageFileName=request.getParameter("imageFileName");
+				String id=(String)session.getAttribute("id");
+				ArticleVO vo=new ArticleVO(1, 0, 0, title, content, imageFileName, id, null);
+			}
+			
 		}
 		
 	}//end service
