@@ -10,6 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/index.js"></script>
+  <script src="js/login.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
   body {
@@ -64,12 +65,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <!-- <a class="navbar-brand" href="#" onclick='window.open("html/login.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=400,height=300");'>Me</a><span id = "welcomeMsg" style="color:black;"></span> -->
-      <span id="welcomeMsg" class="navbar-brand"><a class="navbar-brand" href="#" onclick='window.open("html/login.html", "_blank", "width=500,height=300");'>SignIn</a></span><!-- <span id = "welcomeMsg" style="color:black;"></span> -->
+      <!--새창에서 <span id="welcomeMsg" class="navbar-brand"><a class="navbar-brand" href="#" onclick='window.open("html/login.html", "_blank", "width=500,height=300");'>SignIn</a></span> -->
+      <span id="welcomeMsg" class="navbar-brand">ID<input id="id" size='10'> PW<input id="pw" type="password" size='10'> <button id="loginBtn">로그인</button></span>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <!-- <li><a href="#" onclick='window.open("html/memberInsertForm2.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=400,height=800");'>WHO</a></li> -->
         <li><a href="#" onclick='window.open("html/memberInsertForm2.html", "_blank", "width=500,height=300");'>SignUp</a></li>
         <li><a href="#" onclick='window.open("html/checkboxTest.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=400,height=400");'>Subject</a></li>
         <li><a href="#" onclick='window.open("html/calc.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=500,height=400");'>Exchanges</a></li>

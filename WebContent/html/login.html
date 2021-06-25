@@ -8,30 +8,7 @@
 	crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('button').click(function() {
-			const id = $('#id').val();
-			const pw = $('#pw').val();
-
-			alert(id + " " + pw);
-
-			$.post("../main", {
-				sign:"login",
-				id,	pw
-			}, function(data, status) {
-				data=JSON.parse(data);
-				console.log(data);
-				
-				if(data.msg){	//fail
-					alert(data.msg);
-				}else{	//ok 
-					$.cookie("id", data.id,{path:'/'});
-					opener.document.getElementById("welcomeMsg").innerHTML = data.id + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
-				} 
-				window.close();
-			});
-		});
-	})
+	
 </script>
 </head>
 <body>
