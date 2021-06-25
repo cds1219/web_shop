@@ -252,7 +252,30 @@ public class MainServlet extends HttpServlet {
 					out.append("<body><script>alert(\"해당 글이 없습니다.\")</script></body>");	//jsp로 만들어야함
 				}
 			} catch (ShopException e) {
-				out.append("<body><script>alert(\""+e.getMessage()+"\")</script></body>");	//jsp로 만들어야함
+				out.append("<body><script>alert('"+e.getMessage()+"')</script></body>");	//jsp로 만들어야함
+			}
+			
+		}else if("replyInsert".equals(sign)) {
+			String id=request.getParameter("id");
+			HttpSession session=request.getSession(false);
+			if(session==null) {
+				out.append("침해");
+			}else {
+				if(session.getAttribute("id").equals(id)) {
+					String title=request.getParameter("title");
+					String content=request.getParameter("content");
+					int parentNO=Integer.parseInt(request.getParameter("parentNO"));
+					ArticleVO vo=new ArticleVO(0, 0, parentNO, title, content, null, id, null);
+					System.out.println(vo);
+					try {
+						b_service.addReply(vo);
+						out.append("댓글이 등록되었습니다");
+					} catch (ShopException e) {
+						out.append(e.getMessage());
+					}
+				}else {
+					out.append("침해");
+				}
 			}
 			
 		}

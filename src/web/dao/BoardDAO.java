@@ -93,15 +93,15 @@ public class BoardDAO {
 			// 4.SQL 전송
 			st2=con.prepareStatement("select max(articleNO) from t_board");
 			rs=st2.executeQuery();
+			
 			int articleNO=0;
 			//하나만 가져오니까 if
 			if(rs.next()) {
 				articleNO=rs.getInt(1)+1;
 			}
-			System.out.println(articleNO);
 			
 			st.setInt(1, articleNO);
-			st.setInt(2, 0);
+			st.setInt(2, vo.getParentNO());
 			st.setString(3, vo.getTitle());
 			st.setString(4, vo.getContent());
 			st.setString(5, vo.getImageFileName());

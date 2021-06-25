@@ -24,15 +24,18 @@
 			const id=$("#replyWriterInput").val();
 			const title=$("#replyTitle").val();
 			const content=$("#replyContent").val();
+			const parentNO=$("#articleNO").val();
 			$.post('main',
 					{
 						sign:'replyInsert',
 						id,
 						title,
-						content
+						content,
+						parentNO
 					},
-					function(){
-						
+					function(data){
+						alert(data);
+						location.replace("html/boardList.html");
 					}
 			);
 		});
@@ -43,7 +46,7 @@
 </head>
 <body>
 	<h1 style="text-align: center">글 보기</h1>
-
+	<input type="hidden" id="articleNO" value='${vo.getArticleNO()}' }>
 	<table border="0" align="center">
 		<tr>
 			<td align="right">글제목:</td>
