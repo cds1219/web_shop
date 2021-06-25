@@ -198,8 +198,8 @@ public class MainServlet extends HttpServlet {
 			}
 			out.append("</ul>");
 			
-		}else if("listArticles.do".equals(sign)) {
-			 try {
+		}else if("listArticles.do".equals(sign)) {	//글 목록 보기
+			 try {	//자바 객체
 				ArrayList<ArticleVO> articleList=b_service.listArticles();
 				JSONArray a=new JSONArray();
 				for(ArticleVO vo:articleList) {
@@ -208,6 +208,7 @@ public class MainServlet extends HttpServlet {
 					 * String title=vo.getTitle(); String content=vo.getContent(); String id=vo.getId();
 					 * Date writeDate=vo.getWriteDate();
 					 */
+					//JSON Array로
 					JSONObject o=new JSONObject();
 					o.put("level", vo.getLevel());
 					o.put("articleNO", vo.getArticleNO());

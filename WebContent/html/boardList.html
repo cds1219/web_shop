@@ -11,7 +11,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function() {	//script를 위에 쓸거면 이렇게
 		$.get("../main", {	//디버깅할때만 get으로
 			sign : "listArticles.do"
 		}, function(data) {
@@ -24,7 +24,7 @@
 				console.log(data[i]);
 				table+="<tr><td>"+data[i].articleNO+"</td>";
 				table+="<td>"+data[i].id+"</td>";
-				if(data[i].level!=1){	//답글일때
+				if(data[i].level!=1){	//답글일때 padding
 					table+="<td><a href='../main?articleNO="+data[i].articleNO+"&sign=viewArticle.do'><span style='padding-left:"+(data[i].level*15)+"px'> ↳"+data[i].title+"</span></a></td>";
 				}else{	//첫글일때
 					table+="<td><a href='../main?articleNO="+data[i].articleNO+"&sign=viewArticle.do'><span>"+data[i].title+"</span></a></td>";
