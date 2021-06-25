@@ -26,6 +26,7 @@ $(document).ready(function() {
 			function(data) {
 				alert(data);
 				$.removeCookie('id',{path:'/'});
+				$.removeCookie('JSESSIONID',{path:'/'});	/*안 먹힘*/
 				location.reload();
 			}
 		);

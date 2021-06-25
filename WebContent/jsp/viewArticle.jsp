@@ -16,10 +16,28 @@
 				$("#replyDiv").css("display","block");
 			}else{
 				alert("로그인부터 하세요");
-				location.replace('html/login.html');
+				window.close();
 			}
 		});
-	});
+		
+		$("#replyInsertBtn").click(function(){
+			const id=$("#replyWriterInput").val();
+			const title=$("#replyTitle").val();
+			const content=$("#replyContent").val();
+			$.post('main',
+					{
+						sign:'replyInsert',
+						id,
+						title,
+						content
+					},
+					function(){
+						
+					}
+			);
+		});
+		
+	});//end ready
 		
 </script>
 </head>
@@ -50,12 +68,13 @@
 		</tr>
 	</table>
 	
-	<div style="display: none; background-color: powderblue" id="replyDiv">
+	<div style="padding-bottom:5px; display: none; background-color: powderblue" id="replyDiv">
 		<table>
 			<tr><td>댓글 작성자</td><td><input id='replyWriterInput' disabled="disabled"></td></tr>
-			<tr><td>댓글 제목</td><td><input ></td></tr>
-			<tr><td>댓글 내용</td><td><textarea rows='3' cols='65'></textarea></td></tr>
+			<tr><td>댓글 제목</td><td><input id='replyTitle'></td></tr>
+			<tr><td>댓글 내용</td><td><textarea rows='3' cols='65' id='replyContent'></textarea></td></tr>
 		</table>
+		<center><button id='replyInsertBtn'>댓글 등록</button></center>
 	</div>
 </body>
 </html>
