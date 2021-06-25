@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +10,13 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#replyBtn").click(function(){
-			const username=$.cookie("username", {path:'/'});
-			if(username){
+			const id=$.cookie("id");
+			if(id){
+				$('#replyWriterInput').val(id);
 				$("#replyDiv").css("display","block");
 			}else{
 				alert("로그인부터 하세요");
+				location.replace('html/login.html');
 			}
 		});
 	});
@@ -50,7 +52,8 @@
 	
 	<div style="display: none; background-color: powderblue" id="replyDiv">
 		<table>
-			<tr><td>댓글 작성자</td><td><input ></td></tr>
+			<tr><td>댓글 작성자</td><td><input id='replyWriterInput' disabled="disabled"></td></tr>
+			<tr><td>댓글 제목</td><td><input ></td></tr>
 			<tr><td>댓글 내용</td><td><textarea rows='3' cols='65'></textarea></td></tr>
 		</table>
 	</div>

@@ -24,10 +24,9 @@
 				
 				if(data.msg){	//fail
 					alert(data.msg);
-				}else{	//ok data={"name":"전은수"}
-					//document.cookie = "username="+data;
-					$.cookie("username", data.name,{path:'/'});
-					opener.document.getElementById("welcomeMsg").innerHTML = data.name + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
+				}else{	//ok 
+					$.cookie("id", data.id,{path:'/'});
+					opener.document.getElementById("welcomeMsg").innerHTML = data.id + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
 				} 
 				window.close();
 			});

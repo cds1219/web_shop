@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	const username=$.cookie('username');
-	if(username){
-		document.getElementById("welcomeMsg").innerHTML = username + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
+	const id=$.cookie('id');
+	if(id){
+		document.getElementById("welcomeMsg").innerHTML = id + "님 환영합니다. <button id='logoutBtn'>로그아웃</button>	<button id='memberDeleteBtn'>회원탈퇴</button>";
 	}
 
 	//탈퇴
@@ -12,7 +12,7 @@ $(document).ready(function() {
 				{ sign: "memberDelete" },
 				function(data) {
 					alert(data);
-					$.removeCookie('username',{path:'/'});
+					$.removeCookie('id',{path:'/'});
 					location.reload();
 				}
 			);
@@ -25,7 +25,7 @@ $(document).ready(function() {
 			{ sign: "logout" },
 			function(data) {
 				alert(data);
-				$.removeCookie('username',{path:'/'});
+				$.removeCookie('id',{path:'/'});
 				location.reload();
 			}
 		);

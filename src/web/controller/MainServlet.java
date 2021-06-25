@@ -68,7 +68,7 @@ public class MainServlet extends HttpServlet {
 				out.append(e.getMessage());
 			}
 			
-		}else if(sign.equals("login")) {
+		}else if(sign.equals("login")) {	//login
 			String id=request.getParameter("id");
 			String pw=request.getParameter("pw");
 			MemberVO vo=new MemberVO(id,pw);
@@ -79,18 +79,14 @@ public class MainServlet extends HttpServlet {
 				if(name!=null) {	//ok
 					HttpSession session= request.getSession();
 					session.setAttribute("id", id);
-					System.out.println(session.getId());
-					
-					json.put("name", name);
-					System.out.println(json.toJSONString());	//권장
-					System.out.println(json.toString());
-					out.append(json.toJSONString());	//{"name":"전은수"}
+					json.put("id", id);
+					out.append(json.toJSONString());	//{"id":"a"}
 				}else {	//fail
 					json.put("msg", "login 실패");
 					out.append(json.toJSONString());
 				}
 			} catch (ShopException e) {
-				json.put("msg", e.getMessage());
+				json.put("msg", "login 실패");
 				out.append(json.toJSONString());
 			}
 			
@@ -228,7 +224,7 @@ public class MainServlet extends HttpServlet {
 		}else if("addArticle.do".equals(sign)) {
 			HttpSession session=request.getSession(false);
 			if(session==null) {	//로그인 했는지 확인하기
-				out.append("<body><script>alert('먼저 로그인하세요.')</script></body>");
+				out.append("<body><script>alert('먼저 로그인하세요.');location.replace('html/login.html');</script></body>");
 			}else {
 				String title=request.getParameter("title");
 				String content=request.getParameter("content");
